@@ -15,7 +15,7 @@ public class PdfToLongImageTest {
 
 	public static void main(String[] args) throws IOException {
 //		File pdfFile = new File("d:/ttt.pdf");
-		File pdfFile = new File("d:/用户注册使用协议.pdf");
+		File pdfFile = new File("d:/电商订单系统海量数据分表方案.pdf");
 
 		// PDF文件转为图片
 		File[] imageFiles = PdfConverter.getInstance().castToImages(pdfFile);
