@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.simon.credit</groupId>
+	<artifactId>common-toolkit</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<properties>
+		<java.version>1.7</java.version>
+		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+		<maven-source-plugin.version>2.1</maven-source-plugin.version>
+		<okhttp.version>3.8.1</okhttp.version>
+		<fastjson.version>1.2.36</fastjson.version>
+		<slf4j-api.version>1.6.6</slf4j-api.version>
+		<pdfbox.version>1.7.1</pdfbox.version>
+		<fontbox.version>1.7.0</fontbox.version>
+		<google-thumbnailator.version>0.4.8</google-thumbnailator.version>
+		<commons-io.version>1.3.2</commons-io.version>
+		<commons-lang3.version>3.3.2</commons-lang3.version>
+		<poi-examples.version>3.10-FINAL</poi-examples.version>
+		<commons-beanutils.version>1.9.3</commons-beanutils.version>
+		<com.google.zxing.version>3.3.0</com.google.zxing.version>
+		<kryo.version>3.0.3</kryo.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>${okhttp.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>${pdfbox.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>fontbox</artifactId>
+			<version>${fontbox.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>${google-thumbnailator.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-examples</artifactId>
+			<version>${poi-examples.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${commons-beanutils.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>${com.google.zxing.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>${com.google.zxing.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.esotericsoftware</groupId>
+			<artifactId>kryo</artifactId>
+			<version>${kryo.version}</version>
+		</dependency>
+	</dependencies>
+</project>
