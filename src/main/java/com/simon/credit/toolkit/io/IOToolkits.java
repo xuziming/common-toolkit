@@ -2,7 +2,6 @@ package com.simon.credit.toolkit.io;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -77,8 +76,7 @@ public class IOToolkits {
 			out.flush();
 		} finally {
 			// 关闭输入、输出流资源
-			close(in);
-			close(out);
+			close(in, out);
 		}
 	}
 
@@ -93,29 +91,21 @@ public class IOToolkits {
 	}
 
 	/**
-	 * 关闭文件流资源
-	 * @param fileResource 文件流资源
+	 * 关闭资源
+	 * @param resources 资源
 	 */
-	public static final void close(Closeable fileResource) {
-		if (fileResource != null) {
-			try {
-				fileResource.close();
-			} catch (IOException e) {
-				// ignore
-			}
+	public static final void close(AutoCloseable... resources) {
+		if (resources == null || resources.length == 0) {
+			return;
 		}
-	}
 
-	/**
-	 * 关闭数据库资源
-	 * @param databaseResource 数据库资源
-	 */
-	public static final void close(AutoCloseable databaseResource) {
-		if (databaseResource != null) {
-			try {
-				databaseResource.close();
-			} catch (Exception e) {
-				// ignore
+		for (AutoCloseable resource : resources) {
+			if (resource != null) {
+				try {
+					resource.close();
+				} catch (Exception e) {
+					// ignore
+				}
 			}
 		}
 	}

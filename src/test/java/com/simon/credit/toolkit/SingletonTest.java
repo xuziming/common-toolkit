@@ -70,9 +70,7 @@ public class SingletonTest {
 			e.printStackTrace();
 			LOGGER.info(e.getMessage(), e);
 		} finally {
-			IOToolkits.close(oos);
-			IOToolkits.close(fos);
-			IOToolkits.close(ois);
+			IOToolkits.close(oos, fos, ois);
 		}
 	}
 
