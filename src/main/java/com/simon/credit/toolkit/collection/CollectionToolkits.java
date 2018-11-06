@@ -1,10 +1,10 @@
 package com.simon.credit.toolkit.collection;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -106,7 +106,7 @@ public class CollectionToolkits {
 		}
 
 		if (Queue.class.isAssignableFrom(clazz)) {
-			return (C) new LinkedList<E>();
+			return (C) new ArrayDeque<E>();
 		}
 
 		throw new RuntimeException("not support class: " + clazz.getName());
