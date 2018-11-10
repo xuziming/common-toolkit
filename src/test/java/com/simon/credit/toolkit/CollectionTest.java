@@ -35,8 +35,8 @@ public class CollectionTest {
 			}
 		}, new TypeRef<Set<String>>() {});
 
-		System.out.println(coll.getClass().getName());
-		System.out.println(JSON.toJSONString(coll));
+		LOGGER.info("=== className: {}", coll.getClass().getName());
+		LOGGER.info("=== collection: {}", JSON.toJSONString(coll));
 
 		Map<String, Collection<ServerNode>> map = CollectionToolkits.groupBy(list, new DataFetcher<ServerNode, String>() {
 			@Override

@@ -10,11 +10,15 @@ import com.simon.credit.toolkit.office.ExcelWriter;
 public class ExcelTest {
 
 	public static void main(String[] args) {
-		writeExcel();
-		readExcel();
+//		writeExcel();
+//		readExcel();
+
+//		readRegionalism(new File("d:/省编码.xlsx"));
+//		readRegionalism(new File("d:/市编码.xlsx"));
+		readRegionalism(new File("d:/区编码.xlsx"));
 	}
 
-	private static void writeExcel() {
+	public static void writeExcel() {
 		ExcelWriter excelWriter = ExcelWriter.newInstance(new File("d:/test.xls"));
 
 		Object[] headDatas = new Object[] { 
@@ -32,7 +36,7 @@ public class ExcelTest {
 		System.out.println("success.");
 	}
 
-	private static void readExcel() {
+	public static void readExcel() {
 		ExcelReader excelReader = ExcelReader.newInstance(new File("d:/test.xls"));
 		excelReader.setIncludeHead(false);
 		List<Object[]> cells = excelReader.getData();
@@ -44,8 +48,30 @@ public class ExcelTest {
 				Object obj = cell[j];
 				if (obj == null)
 					obj = "";
-				System.out.print(obj.toString() + " \t");
+				System.out.print(obj.toString() + " \t\t");
 			}
+			System.out.println();
+		}
+	}
+
+	public static void readRegionalism(File regionalismFile) {
+		ExcelReader excelReader = ExcelReader.newInstance(regionalismFile);
+		excelReader.setIncludeHead(true);
+		List<Object[]> rows = excelReader.getData();
+
+		System.out.println("excel has " + rows.size() + " columns");
+
+		for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++) {
+			Object[] rowCells = rows.get(rowIndex);
+
+			for (int columnIndex = 0; columnIndex < rowCells.length; columnIndex++) {
+				Object cell = rowCells[columnIndex];
+				if (cell == null) {
+					cell = "";
+				}
+				System.out.print(cell.toString() + " \t");
+			}
+
 			System.out.println();
 		}
 	}

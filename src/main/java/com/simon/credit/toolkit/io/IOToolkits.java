@@ -235,8 +235,16 @@ public class IOToolkits {
 		return new LineIterator(new InputStreamReader(input, encoding));
 	}
 
+	public static <T> List<T> readLines(String filePath) {
+		return readLines(new File(filePath), CommonToolkits.UTF8);
+	}
+
 	public static <T> List<T> readLines(File file) {
 		return readLines(file, CommonToolkits.UTF8);
+	}
+
+	public static <T> List<T> readLines(String filePath, String encoding) {
+		return readLines(new File(filePath), encoding);
 	}
 
 	public static <T> List<T> readLines(File file, String encoding) {
@@ -255,8 +263,8 @@ public class IOToolkits {
 		} catch (IOException ioe) {
 			// ignore
 		} finally {
-			IOUtils.closeQuietly(input);
 			LineIterator.closeQuietly(lineIterator);
+			IOUtils.closeQuietly(input);
 		}
 		return list;
     }

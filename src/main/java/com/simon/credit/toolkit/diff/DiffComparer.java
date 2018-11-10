@@ -9,16 +9,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.LineIterator;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.simon.credit.toolkit.common.CommonToolkits;
 import com.simon.credit.toolkit.io.ConsoleToolkits;
-import com.simon.credit.toolkit.io.IOToolkits;
 
 /**
  * 差异比较器
@@ -101,54 +96,8 @@ public class DiffComparer<T> {
 			return;
 		}
 
-		//System.out.println("more to delete: " + JSON.toJSONString(diff.getLeft()));
-		// System.out.println("less to insert: " + JSON.toJSONString(diff.getRight()));
-
-		JSONObject jsonObj = JSON.parseObject(getAreaInfo(new File("e:/area.txt")));
-		for (String key : diff.getLeft()) {
-			System.out.println(key + "	" + jsonObj.getString(key));
-		}
-	}
-
-	public static void main(String[] args) throws IOException {
-//		long start = System.currentTimeMillis();
-//		DiffComparer<String> comparer = new DiffComparer<String>();
-//		Pair<Collection<String>, Collection<String>> diff = 
-//			comparer.diff(new File("d:/codes1.txt"), new File("d:/codes2.txt"));
-//		long end = System.currentTimeMillis();
-//		System.out.println("waste time: " + (end - start) + "ms");
-//
-//		comparer.printDiff(diff);
-
-		long start = System.currentTimeMillis();
-		DiffComparer<String> comparer = new DiffComparer<String>();
-		String json = getAreaInfo(new File("e:/area.txt"));
-		String regionalism = IOToolkits.readFile(new File("e:/regionalism.json"));
-
-		Pair<Collection<String>, Collection<String>> diff = comparer.diff(json, regionalism);
-		long end = System.currentTimeMillis();
-		System.out.println("waste time: " + (end - start) + "ms");
-
-		comparer.printDiff(diff);
-	}
-
-	private static String getAreaInfo(File file) {
-		JSONObject json = new JSONObject();
-		LineIterator lineIterator = null;
-		try {
-			lineIterator = IOToolkits.lineIterator(file);
-			while(lineIterator.hasNext()) {
-				String line = lineIterator.nextLine();
-				String[] ary = StringUtils.split(line, "	");
-				json.put(CommonToolkits.recurseRemoveEnd(ary[0], "00"), ary[1]);
-			}
-		} catch (Exception e) {
-			// ignore
-		} finally {
-			LineIterator.closeQuietly(lineIterator);
-		}
-
-		return json.toJSONString();
+		System.out.println("more to delete: " + JSON.toJSONString(diff.getLeft()));
+		System.out.println("less to insert: " + JSON.toJSONString(diff.getRight()));
 	}
 
 }

@@ -13,8 +13,18 @@ import com.simon.credit.toolkit.logger.format.Slf4jFormatter;
  */
 public final class FormatLogger extends DelegateLogger {
 
+	/** 默认日期格式 */
+	private static final String DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+	private boolean isConsoleEnabled = false;
+
 	public FormatLogger(Logger delegator) {
+		this(delegator, true);
+	}
+
+	public FormatLogger(Logger delegator, boolean isConsoleEnabled) {
 		super(delegator);
+		this.isConsoleEnabled = isConsoleEnabled;
 	}
 
 	/****************************************************************************************************/
@@ -107,16 +117,23 @@ public final class FormatLogger extends DelegateLogger {
 		}
 	}
 
-	public static <T> String format(T object) {
-		return JSON.toJSONStringWithDateFormat(object,
-			CommonToolkits.DEFFAULT_DATE_FORMAT, SerializerFeature.WriteMapNullValue);
+	protected static <T> String format(T object) {
+		if (object == null) {
+			return null;
+		}
+		return JSON.toJSONStringWithDateFormat(object, DEFFAULT_DATE_FORMAT, SerializerFeature.WriteMapNullValue);
 	}
 
-	public static Object[] format(Object[] args) {
-		for (int i = 0; i < args.length; i++) {
-			args[i] = format(args[i]);
+	protected static Object[] format(Object[] args) {
+		if (args == null || args.length == 0) {
+			return args;
 		}
-		return args;
+
+		Object[] formatArgs = new Object[args.length];
+		for (int i = 0; i < args.length; i++) {
+			formatArgs[i] = format(args[i]);
+		}
+		return formatArgs;
 	}
 
 	/**
@@ -124,10 +141,18 @@ public final class FormatLogger extends DelegateLogger {
 	 * @param messagePattern
 	 * @param args
 	 */
-	private void consolePrint(String messagePattern, Object... args) {
-		if (CommonToolkits.isNotEmpty(messagePattern)) {
-			System.out.println(Slf4jFormatter.format(messagePattern, args));
+	public void consolePrint(String messagePattern, Object... args) {
+		if (!isConsoleEnabled) {
+			return;
 		}
+		if (CommonToolkits.isEmptyContainNull(messagePattern)) {
+			return;
+		}
+		System.out.println(Slf4jFormatter.format(messagePattern, args));
+	}
+
+	public void setConsoleEnabled(boolean isConsoleEnabled) {
+		this.isConsoleEnabled = isConsoleEnabled;
 	}
 
 }
