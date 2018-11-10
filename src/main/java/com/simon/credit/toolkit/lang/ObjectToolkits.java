@@ -24,35 +24,34 @@ public class ObjectToolkits {
 	 * @return
 	 */
 	public static <T> T deepClone(T object) {
+		if (object == null) {
+			return null;
+		}
 		return KRYO_TL.get().copy(object);
 	}
 
 	public static <T> String toJSONString(T object) {
+		if (object == null) {
+			return "null";
+		}
 		return JSON.toJSONStringWithDateFormat(object,
 			CommonToolkits.DEFFAULT_DATE_FORMAT, SerializerFeature.WriteMapNullValue);
 	}
 
-	public static String[] toJSONStringArray(Object[] args) {
-		String[] strAry = new String[args.length];
-		for (int i = 0; i < args.length; i++) {
-			strAry[i] = toJSONString(args[i]);
-		}
-		return strAry;
-	}
+	public static String toString(Object object) {
+        return toString(object, null);
+    }
 
 	public static String toString(Object object, String nullDefault) {
         return (object != null) ? object.toString() : nullDefault;
     }
 
 	public static final String trimToNull(Object object) {
-		if (CommonToolkits.isEmptyContainNull(String.valueOf(object))) {
-			return null;
-		}
-		return object.toString().trim();
+		return CommonToolkits.trim(toString(object), null);
 	}
 
 	public static final String trimToEmpty(Object object) {
-		return CommonToolkits.trimToEmpty(String.valueOf(object));
+		return CommonToolkits.trim(toString(object), "");
 	}
 
 }
