@@ -1,7 +1,5 @@
 package com.simon.credit.toolkit;
 
-import java.util.Date;
-
 import org.slf4j.Logger;
 
 import com.simon.credit.toolkit.lang.ObjectToolkits;
@@ -15,11 +13,10 @@ public class DeepCloneTest {
 	private static final Logger LOGGER = FormatLoggerFactory.getLogger(DeepCloneTest.class);
 
 	public static void main(String[] args) {
-		Date date = new Date();
 //		LOGGER.info("origin date: {}", date);
 //		long time = date.getTime();
 
-		User user = new User("tom", 18, date);
+		User user = new User("tom", 18);
 
 		long start = System.currentTimeMillis();
 		for (int i = 0; i < 1000000; i++) {
