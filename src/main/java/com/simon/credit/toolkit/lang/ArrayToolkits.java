@@ -43,4 +43,53 @@ public class ArrayToolkits {
 		return INDEX_NOT_FOUND;
 	}
 
+	public static final boolean contains(final Object target, final Object... objs) {
+		if (objs == null || objs.length == 0) {
+			return false;
+		}
+
+		if (target == null) {
+			for (int i = 0; i < objs.length; i++) {
+				if (objs[i] == null) {
+					return true;
+				}
+			}
+		} else if (objs.getClass().getComponentType().isInstance(target)) {
+			for (int i = 0; i < objs.length; i++) {
+				if (target.equals(objs[i])) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * 获取数组指定位置的值,越界则返回def
+	 * @param array
+	 * @param index
+	 * @param def
+	 * @return
+	 */
+	public static final <T> T get(T[] array, int index, T def) {
+		int arrayLength = array == null ? 0 : array.length;
+		return get(array, arrayLength, index, def);
+	}
+
+	/**
+	 * 获取数组指定位置的值,越界则返回def
+	 * @param array
+	 * @param arrayLength
+	 * @param index
+	 * @param def
+	 * @return
+	 */
+	public static final <T> T get(T[] array, int arrayLength, int index, T def) {
+		if (index >= 0 && index < arrayLength) {
+			return array[index];
+		}
+		return def;
+	}
+
 }

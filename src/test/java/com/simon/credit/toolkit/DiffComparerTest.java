@@ -8,12 +8,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeMap;
 
-import org.apache.commons.io.LineIterator;
-import org.apache.commons.lang3.StringUtils;
-
 import com.alibaba.fastjson.JSONObject;
 import com.simon.credit.toolkit.common.CommonToolkits;
 import com.simon.credit.toolkit.io.IOToolkits;
+import com.simon.credit.toolkit.io.LineIterator;
 
 /**
  * 差异比较器测试
@@ -119,8 +117,8 @@ public class DiffComparerTest<T> {
 				if (removeNation) {
 					for (String nation : nations) {
 						if (line.contains(nation)) {
-							line = StringUtils.remove(line, nation);
-							line = StringUtils.replace(line, "自治", "");
+							line = CommonToolkits.remove(line, nation);
+							line = CommonToolkits.replace(line, "自治", "");
 						}
 					}
 				}
@@ -142,7 +140,7 @@ public class DiffComparerTest<T> {
 			lineIterator = IOToolkits.lineIterator(file);
 			while(lineIterator.hasNext()) {
 				String line = lineIterator.nextLine();
-				String[] ary = StringUtils.split(line, " ");
+				String[] ary = line.split(" ");
 				coll.put(ary[1].trim(), CommonToolkits.recurseRemoveEnd(ary[0], "00").trim());
 			}
 		} catch (Exception e) {

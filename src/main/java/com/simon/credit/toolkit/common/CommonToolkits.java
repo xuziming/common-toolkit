@@ -1,8 +1,6 @@
 package com.simon.credit.toolkit.common;
 
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
@@ -19,8 +17,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 通用工具类
@@ -169,6 +165,10 @@ public class CommonToolkits {
 		return true;
 	}
 
+	public static final boolean endsWith(final CharSequence str, final CharSequence suffix) {
+        return endsWith(str, suffix, false);
+    }
+
 	public static final boolean endsWithAnyIgnoreCase(CharSequence string, CharSequence... searchStrings) {
 		if (string == null || string.length() == 0 || searchStrings == null || searchStrings.length == 0) {
             return false;
@@ -315,21 +315,6 @@ public class CommonToolkits {
 	}
 
 	/**
-	 * 判断布尔字符串是否不为true
-	 * <pre>
-	 * CommonUtils.isNotTrue("true")  = false
-	 * CommonUtils.isNotTrue("false") = true
-	 * CommonUtils.isNotTrue(null)    = true
-	 * </pre>
-	 * 
-	 * @param input 输入值
-	 * @return
-	 */
-	public static final boolean isNotTrue(String input) {
-		return !isTrue(input);
-	}
-
-	/**
 	 * 判断布尔字符串是否为false
 	 * <pre>
 	 * CommonUtils.isFalse("true")  = false
@@ -348,19 +333,12 @@ public class CommonToolkits {
 		return Boolean.FALSE.equals(bool);
 	}
 
-	/**
-	 * 判断布尔字符串是否不为false
-	 * <pre>
-	 * CommonUtils.isNotFalse("true")  = true
-	 * CommonUtils.isNotFalse("false") = false
-	 * CommonUtils.isNotFalse(null)    = true
-	 * <pre>
-	 * 
-	 * @param input 输入值
-	 * @return
-	 */
-	public static final boolean isNotFalse(String input) {
-		return !isFalse(input);
+	public static final boolean isTrue(Boolean bool) {
+		return Boolean.TRUE.equals(bool);
+	}
+
+	public static final boolean isFalse(Boolean bool) {
+		return Boolean.FALSE.equals(bool);
 	}
 
 	/**======================================================================================*/
@@ -479,13 +457,13 @@ public class CommonToolkits {
 		return def;
 	}
 
-	public static DateFormat getDateFormat(String pattern) {
+	public static final DateFormat getDateFormat(String pattern) {
 		return getDateFormat(pattern, null);
 	}
 
 	public static DateFormat getDateFormat(String pattern, Locale locale) {
 		if (isEmptyContainNull(pattern)) {
-			throw illegalArgumentException("date format pattern cann't be empty!");
+			throw new IllegalArgumentException("date format pattern cann't be empty!");
 		}
 
 		Map<String, DateFormat> dateFormatMap = threadLocal.get();
@@ -530,7 +508,7 @@ public class CommonToolkits {
 		private static final long serialVersionUID = 6468294574893504185L;
 		{
 			/** key:格式化模式字符串长度, value:格式化模式 */
-			put(8, "yyyy-M-d");
+			put(8 , "yyyy-M-d");
 			put(10, "yyyy-MM-dd");
 			put(19, "yyyy-MM-dd HH:mm:ss");
 			put(23, "yyyy-MM-dd HH:mm:ss.SSS");
@@ -588,7 +566,7 @@ public class CommonToolkits {
 		}
 
 		if (longValue < 0) {
-			throw illegalArgumentException("can not cast to Date, value : " + value);
+			throw new IllegalArgumentException("can not cast to Date, value : " + value);
 		}
 
 		return new Date(longValue);
@@ -658,91 +636,6 @@ public class CommonToolkits {
 		return value == null ? null : (T) value;
 	}
 
-	/**
-	 * 获取数组指定位置的值,越界则返回def
-	 * 
-	 * @param array
-	 * @param index
-	 * @param def
-	 * @return
-	 */
-	public static final <T> T get(T[] array, int index, T def) {
-		int arrayLength = array == null ? 0 : array.length;
-		return get(array, arrayLength, index, def);
-	}
-
-	/**
-	 * 获取数组指定位置的值,越界则返回def
-	 * 
-	 * @param array
-	 * @param arrayLength
-	 * @param index
-	 * @param def
-	 * @return
-	 */
-	public static final <T> T get(T[] array, int arrayLength, int index, T def) {
-		if (index >= 0 && index < arrayLength) {
-			return array[index];
-		}
-		return def;
-	}
-
-	/**======================================================================================*/
-	/**=====================================异常定义与处理 ======================================*/
-	/**======================================================================================*/
-
-	public static final IllegalStateException illegalStateException(Throwable t) {
-		return new IllegalStateException(t);
-	}
-
-	public static final IllegalStateException illegalStateException(String message) {
-		return new IllegalStateException(message);
-	}
-
-	public static final IllegalStateException illegalStateException(String message, Throwable t) {
-		return new IllegalStateException(message, t);
-	}
-
-	public static final IllegalArgumentException illegalArgumentException(String message) {
-		return new IllegalArgumentException(message);
-	}
-
-	public static final UnsupportedOperationException unsupportedMethodException() {
-		return new UnsupportedOperationException("unsupport this method");
-	}
-
-	/**
-	 * 获取最原始的抛出异常
-	 * @param t 捕捉到的异常抛出对象
-	 * @return
-	 */
-	public static final Throwable foundRealThrowable(Throwable t) {
-		Throwable cause = t.getCause();
-		if (cause == null) return t;
-		return foundRealThrowable(cause);
-	}
-
-	/**
-	 * 格式化异常
-	 * 
-	 * @param t
-	 * @return
-	 */
-	public static final String formatThrowable(Throwable t) {
-		if (t == null) return "";
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		t.printStackTrace(pw);
-		pw.flush();
-		sw.flush();
-		return sw.toString();
-	}
-
-	public static final String formatThrowableForHtml(Throwable t) {
-		String ex = formatThrowable(t);
-		return ex.replaceAll("\n\t", " ");
-	}
-
 	/**======================================================================================*/
 	/**======================================反射/实例化 =======================================*/
 	/**======================================================================================*/
@@ -787,7 +680,7 @@ public class CommonToolkits {
 		try {
 			return URLDecoder.decode(input, UTF8);
 		} catch (Exception e) {
-			throw illegalStateException(e);
+			throw new IllegalStateException(e);
 		}
 	}
 
@@ -796,7 +689,7 @@ public class CommonToolkits {
 		try {
 			return URLEncoder.encode(input, UTF8);
 		} catch (Exception e) {
-			throw illegalStateException(e);
+			throw new IllegalStateException(e);
 		}
 	}
 
@@ -805,8 +698,10 @@ public class CommonToolkits {
 	/**======================================================================================*/
 
 	public static final InputStream getInputStreamFromClassPath(String filename) {
-		return CommonToolkits.isEmpty(filename) ? null : 
-			CommonToolkits.class.getClassLoader().getResourceAsStream(filename);
+		if (isEmptyContainNull(filename)) {
+			return null;
+		}
+		return Thread.currentThread().getContextClassLoader().getResourceAsStream(filename);
 	}
 
 	/**======================================================================================*/
@@ -875,7 +770,6 @@ public class CommonToolkits {
 
 	/**
 	 * java去除字符串中的空格、回车、换行符、制表符
-	 * 
 	 * @param input 输入值
 	 * @return
 	 */
@@ -904,10 +798,35 @@ public class CommonToolkits {
 	 * @return
 	 */
 	public static final String recurseRemoveEnd(String content, String remove) {
-		if (StringUtils.endsWith(content, remove)) {
-			return recurseRemoveEnd(StringUtils.removeEnd(content, remove), remove);
+		if (endsWith(content, remove)) {
+			return recurseRemoveEnd(removeEnd(content, remove), remove);
 		}
 		return content;
+	}
+
+	public static final String removeEnd(final String str, final String remove) {
+		if (isEmpty(str) || isEmpty(remove)) {
+			return str;
+		}
+		if (str.endsWith(remove)) {
+			return str.substring(0, str.length() - remove.length());
+		}
+		return str;
+	}
+
+	public static final String remove(final String str, final String remove) {
+		if (isEmpty(str) || isEmpty(remove)) {
+			return str;
+		}
+		return replace(str, remove, "", -1);
+	}
+
+	public static final boolean contains(final CharSequence seq, final CharSequence searchSeq) {
+		if (seq == null || searchSeq == null) {
+			return false;
+		}
+
+		return seq.toString().indexOf(searchSeq.toString(), 0) >= 0;
 	}
 
 }

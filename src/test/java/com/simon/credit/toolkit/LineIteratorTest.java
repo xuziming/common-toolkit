@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import org.apache.commons.io.LineIterator;
-
 import com.simon.credit.toolkit.common.CommonToolkits;
 import com.simon.credit.toolkit.io.IOToolkits;
+import com.simon.credit.toolkit.io.LineIterator;
 
 /**
  * 逐行读(行迭代)测试

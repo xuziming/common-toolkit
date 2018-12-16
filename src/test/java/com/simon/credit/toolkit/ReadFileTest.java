@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.io.LineIterator;
-import org.apache.commons.lang3.StringUtils;
-
+import com.simon.credit.toolkit.common.CommonToolkits;
 import com.simon.credit.toolkit.io.IOToolkits;
+import com.simon.credit.toolkit.io.LineIterator;
 
 public class ReadFileTest {
 
@@ -20,8 +19,8 @@ public class ReadFileTest {
 			String line = lineIterator.nextLine();
 			boolean exists = false;
 			for (int i = 0; i < infos.size(); i++) {
-				String[] ary = StringUtils.split(infos.get(i), "$");
-				if (StringUtils.contains(line, ary[1])) {
+				String[] ary = infos.get(i).split("$");
+				if (CommonToolkits.contains(line, ary[1])) {
 					exists = true;
 					String id = ary[0];
 					String cityZoneCode = line.substring(line.length() - 9, line.length() - 3);

@@ -17,7 +17,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.simon.credit.toolkit.common.CommonToolkits;
 import com.simon.credit.toolkit.io.IOToolkits;
 
 /**
@@ -50,7 +49,7 @@ public class ExcelWriter {
 			return instance;
 		}
 
-		throw CommonToolkits.illegalArgumentException("input file isn't an excel file");
+		throw new IllegalArgumentException("input file isn't an excel file");
 	}
 
 	private File renameWhenExists(File file) {
@@ -59,7 +58,7 @@ public class ExcelWriter {
 
 	private File renameWhenExists(File file, Integer index) {
 		if (file == null) {
-			throw CommonToolkits.illegalArgumentException("file is null");
+			throw new IllegalArgumentException("file is null");
 		}
 
 		if (!file.exists()) {

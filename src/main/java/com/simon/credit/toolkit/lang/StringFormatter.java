@@ -1,4 +1,4 @@
-package com.simon.credit.toolkit.logger.format;
+package com.simon.credit.toolkit.lang;
 
 /**
  * 替换Java字符串中${}或{}等占位符的解析工具类
@@ -87,7 +87,6 @@ public class StringFormatter {
 					builder.append(src, start, src.length - start);
 					offset = src.length;
 				} else {
-					// //////仅仅修改了该else分支下的个别行代码//////
 					String value = "";
 					if (argsIndex <= args.length - 1) {
 						if (args[argsIndex] != null) {
@@ -100,7 +99,6 @@ public class StringFormatter {
 					builder.append(value);
 					offset = end + closeToken.length();
 					argsIndex++;
-					// ////////////////////////////////////////
 				}
 			}
 			start = str.indexOf(openToken, offset);

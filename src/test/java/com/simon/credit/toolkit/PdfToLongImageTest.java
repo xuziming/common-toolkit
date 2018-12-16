@@ -14,7 +14,6 @@ import com.simon.credit.toolkit.pdf.PdfConverter;
 public class PdfToLongImageTest {
 
 	public static void main(String[] args) throws IOException {
-//		File pdfFile = new File("d:/ttt.pdf");
 		File pdfFile = new File("d:/电商订单系统海量数据分表方案.pdf");
 
 		// PDF文件转为图片

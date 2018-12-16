@@ -36,7 +36,7 @@ public class ExcelReader {
 	 */
 	public static ExcelReader newInstance(File excelFile) {
 		if (excelFile == null || !excelFile.exists()) {
-			throw CommonToolkits.illegalArgumentException("illegal excel file!");
+			throw new IllegalArgumentException("illegal excel file!");
 		}
 
 		ExcelReader instance = new ExcelReader();
@@ -53,9 +53,9 @@ public class ExcelReader {
 				return instance;
 			}
 
-			throw CommonToolkits.illegalStateException("unsupport file type!");
+			throw new IllegalStateException("unsupport file type!");
 		} catch (Exception e) {
-			throw CommonToolkits.illegalStateException("read excel file error!");
+			throw new IllegalStateException("read excel file error!");
 		} finally {
 			IOToolkits.close(input);
 		}

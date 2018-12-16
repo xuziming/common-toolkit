@@ -14,16 +14,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.LineIterator;
-
-import com.simon.credit.toolkit.common.CommonToolkits;
-
 /**
  * 读写工具类
  * @author XUZIMING 2016-10-11
  */
 public class IOToolkits {
+
+	public static final String UTF8 = "UTF-8";
 
 	public static final String readFile(File file) throws IOException {
 		InputStream input = null;
@@ -43,7 +40,7 @@ public class IOToolkits {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 			copy(input, out);
-			return CommonToolkits.toString(out.toByteArray());
+			return new String(out.toByteArray(), UTF8);
 		} finally {
 			close(out);
 		}
@@ -129,7 +126,7 @@ public class IOToolkits {
 		}
 
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(input, CommonToolkits.UTF8));
+			BufferedReader br = new BufferedReader(new InputStreamReader(input, UTF8));
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				System.out.println(line);
@@ -164,7 +161,7 @@ public class IOToolkits {
 	 * @throws IOException
 	 */
 	public static LineIterator lineIterator(File file) throws IOException {
-		return lineIterator(file, CommonToolkits.UTF8);
+		return lineIterator(file, UTF8);
 	}
 
 	/**
@@ -217,7 +214,7 @@ public class IOToolkits {
 	 * @throws IOException
 	 */
 	public static LineIterator lineIterator(InputStream input) throws IOException {
-		return lineIterator(input, CommonToolkits.UTF8);
+		return lineIterator(input, UTF8);
 	}
 
 	/**
@@ -236,11 +233,11 @@ public class IOToolkits {
 	}
 
 	public static <T> List<T> readLines(String filePath) {
-		return readLines(new File(filePath), CommonToolkits.UTF8);
+		return readLines(new File(filePath), UTF8);
 	}
 
 	public static <T> List<T> readLines(File file) {
-		return readLines(file, CommonToolkits.UTF8);
+		return readLines(file, UTF8);
 	}
 
 	public static <T> List<T> readLines(String filePath, String encoding) {
@@ -264,7 +261,7 @@ public class IOToolkits {
 			// ignore
 		} finally {
 			LineIterator.closeQuietly(lineIterator);
-			IOUtils.closeQuietly(input);
+			close(input);
 		}
 		return list;
     }
