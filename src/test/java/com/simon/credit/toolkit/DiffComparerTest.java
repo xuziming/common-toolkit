@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeMap;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.alibaba.fastjson.JSONObject;
 import com.simon.credit.toolkit.common.CommonToolkits;
+import com.simon.credit.toolkit.diff.DiffComparer;
 import com.simon.credit.toolkit.io.IOToolkits;
 import com.simon.credit.toolkit.io.LineIterator;
 
@@ -31,15 +31,15 @@ public class DiffComparerTest<T> {
 	};
 
 	public static void main(String[] args) throws IOException {
-//		long start = System.currentTimeMillis();
-//		DiffComparer<String> comparer = new DiffComparer<String>();
-//		Pair<Collection<String>, Collection<String>> diff = 
-//			comparer.diff(new File("d:/codes1.txt"), new File("d:/codes2.txt"));
-//		long end = System.currentTimeMillis();
-//		System.out.println("waste time: " + (end - start) + "ms");
-//
-//		comparer.printDiff(diff);
-//
+		long start = System.currentTimeMillis();
+		DiffComparer<String> comparer = new DiffComparer<String>();
+		Pair<Collection<String>, Collection<String>> diff = 
+			comparer.diff(new File("d:/codes1.txt"), new File("d:/codes2.txt"));
+		long end = System.currentTimeMillis();
+		System.out.println("waste time: " + (end - start) + "ms");
+
+		comparer.printDiff(diff);
+
 //		long start = System.currentTimeMillis();
 //		DiffComparer<String> comparer = new DiffComparer<String>();
 //		Collection<String> json = getAreaInfo(new File("d:/district-less.txt"), true);
@@ -80,29 +80,29 @@ public class DiffComparerTest<T> {
 //			}
 //		}
 
-		List<String> lines = IOToolkits.readLines(new File("d:/final.txt"));
-		TreeMap<Integer, String> map = new TreeMap<Integer, String>(
-			new Comparator<Integer>() {
-				@Override
-				public int compare(Integer id1, Integer id2) {
-					// 升序排序
-					return id1 - id2;
-					// 降序排序
-					// return id2 - id1;
-				}
-			}
-		);
-
-		for (String line : lines) {
-			// UPDATE tb_sys_cityzone set CITYZONECODE='130627' WHERE CITYZONEID=134; -- 唐县
-			int start = "UPDATE tb_sys_cityzone set CITYZONECODE='".length();
-			String code = line.substring(start, start + 6);
-			map.put(Integer.parseInt(code), line);
-		}
-
-		for (String sql : map.values()) {
-			System.out.println(sql);
-		}
+//		List<String> lines = IOToolkits.readLines(new File("d:/final.txt"));
+//		TreeMap<Integer, String> map = new TreeMap<Integer, String>(
+//			new Comparator<Integer>() {
+//				@Override
+//				public int compare(Integer id1, Integer id2) {
+//					// 升序排序
+//					return id1 - id2;
+//					// 降序排序
+//					// return id2 - id1;
+//				}
+//			}
+//		);
+//
+//		for (String line : lines) {
+//			// UPDATE tb_sys_cityzone set CITYZONECODE='130627' WHERE CITYZONEID=134; -- 唐县
+//			int start = "UPDATE tb_sys_cityzone set CITYZONECODE='".length();
+//			String code = line.substring(start, start + 6);
+//			map.put(Integer.parseInt(code), line);
+//		}
+//
+//		for (String sql : map.values()) {
+//			System.out.println(sql);
+//		}
 	}
 
 	public static Collection<String> getAreaInfo(File file, boolean removeNation) {

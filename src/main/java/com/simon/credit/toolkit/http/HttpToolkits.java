@@ -25,7 +25,7 @@ import com.simon.credit.toolkit.io.IOToolkits;
 import com.simon.credit.toolkit.lang.ObjectToolkits;
 
 /**
- * HTTP请求工具类(基于OkHttp组件)
+ * HTTP请求工具类
  * @author XUZIMING 2017-08-01
  */
 public class HttpToolkits {
