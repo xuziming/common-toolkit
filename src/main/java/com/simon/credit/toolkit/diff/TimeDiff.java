@@ -11,20 +11,11 @@ public class TimeDiff {
 		// 调用.getTime()方法进行相减, 得出来的是毫秒
 		long millisecond = date2.getTime() - date1.getTime();
 
-		// 计算小时
-		long hour = millisecond / 1000 / 60 / 60;
-
-		// 计算分钟
-		long minute = millisecond / 1000 / 60;
-
-		// 计算秒数
-		long second = millisecond / 1000;
-
 		switch (timeUnit) {
 			case MILLISECONDS: return millisecond;
-			case SECONDS	 : return second;
-			case MINUTES	 : return minute;
-			case HOURS		 : return hour;
+			case SECONDS	 : return millisecond / 1000;
+			case MINUTES	 : return millisecond / 1000 / 60;
+			case HOURS		 : return millisecond / 1000 / 60 / 60;
 			default			 : return millisecond;
 		}
 	}
