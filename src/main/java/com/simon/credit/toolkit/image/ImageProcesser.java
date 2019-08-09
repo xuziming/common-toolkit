@@ -8,7 +8,7 @@ import net.coobird.thumbnailator.Thumbnails;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.simon.credit.exception.SingletonException;
+import com.simon.credit.exception.MultipleInstanceException;
 
 /**
  * 图片处理器
@@ -23,7 +23,7 @@ public class ImageProcesser {
 	public ImageProcesser() {
 		// 避免采用反射方式直接调用私有构造器, 从而破解单例模式
 		if (SingletonHolder.INSTANCE != null) {
-			throw new SingletonException(ImageProcesser.class);
+			throw new MultipleInstanceException(ImageProcesser.class);
 		}
 	}
 

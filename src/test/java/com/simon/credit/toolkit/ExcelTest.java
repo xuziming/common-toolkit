@@ -45,9 +45,9 @@ public class ExcelTest {
 
 			Date addTime = (Date) cell[0];// 接收订单的时间
 			Date borrowFullTime = (Date) cell[1];// 满标时间
-			Date paymentTime = (Date) cell[2];// 放款时间
+//			Date paymentTime = (Date) cell[2];// 放款时间
 			int status = (int) CommonToolkits.parseDouble(cell[3].toString());// 状态, 6:放款成功
-			int borrowStatus = (int) CommonToolkits.parseDouble(cell[4].toString());// 0 招标中， =3满标 =5流标
+//			int borrowStatus = (int) CommonToolkits.parseDouble(cell[4].toString());// 0 招标中， =3满标 =5流标
 			String orgDept = cell[5].toString();// 来源渠道
 
 			if (status == 6 && "iqiyi".equals(orgDept)) {

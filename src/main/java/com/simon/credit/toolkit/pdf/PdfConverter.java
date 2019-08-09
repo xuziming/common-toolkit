@@ -16,7 +16,7 @@ import javax.imageio.stream.ImageOutputStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
-import com.simon.credit.exception.SingletonException;
+import com.simon.credit.exception.MultipleInstanceException;
 
 /**
  * PDF转换器
@@ -27,7 +27,7 @@ public class PdfConverter {
 	private PdfConverter() {
 		// 避免采用反射方式直接调用私有构造器, 从而破解单例模式
 		if (SingletonHolder.INSTANCE != null) {
-			throw new SingletonException(PdfConverter.class);
+			throw new MultipleInstanceException(PdfConverter.class);
 		}
 	}
 

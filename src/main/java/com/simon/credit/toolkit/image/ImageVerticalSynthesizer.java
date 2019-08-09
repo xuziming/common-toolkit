@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import com.simon.credit.exception.SingletonException;
+import com.simon.credit.exception.MultipleInstanceException;
 
 /**
  * 图片纵向合成器
@@ -25,7 +25,7 @@ public class ImageVerticalSynthesizer {
 	private ImageVerticalSynthesizer() {
 		// 避免采用反射方式直接调用私有构造器, 从而破解单例模式
 		if (SingletonHolder.INSTANCE != null) {
-			throw new SingletonException(ImageVerticalSynthesizer.class);
+			throw new MultipleInstanceException(ImageVerticalSynthesizer.class);
 		}
 	}
 

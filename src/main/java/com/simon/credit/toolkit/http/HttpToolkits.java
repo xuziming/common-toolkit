@@ -19,7 +19,7 @@ import okhttp3.Response;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.simon.credit.exception.SingletonException;
+import com.simon.credit.exception.MultipleInstanceException;
 import com.simon.credit.toolkit.common.CommonToolkits;
 import com.simon.credit.toolkit.io.IOToolkits;
 import com.simon.credit.toolkit.lang.ObjectToolkits;
@@ -42,7 +42,7 @@ public class HttpToolkits {
 	private HttpToolkits() {
 		// 避免采用反射方式直接调用私有构造器, 从而破解单例模式
 		if (SingletonHolder.INSTANCE != null) {
-			throw new SingletonException(HttpToolkits.class);
+			throw new MultipleInstanceException(HttpToolkits.class);
 		}
 	}
 
