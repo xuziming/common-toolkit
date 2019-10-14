@@ -15,7 +15,6 @@ public class HttpInvokeTest {
 
 	class HttpCallable implements Callable<String> {
 
-		@Override
 		public String call() throws Exception {
 			String url = "http://www.kuaidi100.com/query";
 			Map<String, Object> paramMap = new HashMap<String, Object>();
