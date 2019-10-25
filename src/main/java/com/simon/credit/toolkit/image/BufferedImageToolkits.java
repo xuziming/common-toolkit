@@ -2,7 +2,6 @@ package com.simon.credit.toolkit.image;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -12,12 +11,14 @@ import javax.imageio.ImageIO;
  */
 public class BufferedImageToolkits {
 
+	private BufferedImageToolkits() {
+		// 构造器私有化
+	}
+
 	/**
 	 * 保存合成后的图像文件
-	 * 
 	 * @param combined
 	 * @param destImageFile
-	 * @throws IOException
 	 */
 //	public static void save(BufferedImage combined, File destImageFile) {
 //		// 输出流
@@ -37,10 +38,8 @@ public class BufferedImageToolkits {
 
 	/**
 	 * 保存合成后的图像文件
-	 * 
 	 * @param combined
 	 * @param destImageFile
-	 * @throws IOException
 	 */
 	public static void saveAs(BufferedImage combined, File destImageFile) {
 		try {
