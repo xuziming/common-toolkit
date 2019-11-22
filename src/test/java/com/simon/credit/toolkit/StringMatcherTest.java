@@ -13,6 +13,10 @@ public class StringMatcherTest {
 		System.out.println(KMPMatcher.indexOf("helloworld", "ow"));
 
 		System.out.println(KMPMatcher.indexOf("fasdfa_f002_hellowtorld", "owt"));
+
+//		String content = FileUtils.readFileToString(new File("d:/76873.txt"));
+//		System.out.println(content.indexOf("d3cca8af-21b8-4963-878b-f8ba115d21e4"));
+//		System.out.println(KMPMatcher.indexOf(content, "d3cca8af-21b8-4963-878b-f8ba115d21e4"));
 	}
 
 }
