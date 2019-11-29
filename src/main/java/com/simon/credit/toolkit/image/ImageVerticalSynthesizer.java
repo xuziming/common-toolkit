@@ -6,8 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectStreamException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -101,20 +99,33 @@ public class ImageVerticalSynthesizer {
 			return;
 		}
 
-		List<File> imageFiles = new ArrayList<File>(imagePaths.length);
+		File[] imageFiles = new File[imagePaths.length];
+		int index = 0;
 		for (String imagePath : imagePaths) {
-			if (imagePath == null || imagePath.trim().isEmpty()) {
+			if (!isLegalFile(imagePath)) {
 				continue;
 			}
-			File imageFile = new File(imagePath.trim());
-			if (!imageFile.exists() || imageFile.isDirectory()) {
-				continue;
-			}
-			imageFiles.add(imageFile);
+			imageFiles[index++] = new File(imagePath);
 		}
 
 		// 图片合成
-		imageSynthesize(destImageFile, imageFiles.toArray(new File[imageFiles.size()]));
+		imageSynthesize(destImageFile, imageFiles);
+	}
+
+	/**
+	 * 判断文件是否合法
+	 * @param filePath 文件路径
+	 * @return true:合法文件; false:非法文件
+	 */
+	public boolean isLegalFile(String filePath) {
+		if (filePath == null || filePath.trim().isEmpty()) {
+			return false;
+		}
+		File file = new File(filePath);
+		if (!file.exists() || file.isDirectory()) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -172,7 +183,7 @@ public class ImageVerticalSynthesizer {
 		for (int i = 0; i < imageAry.length; i++) {
 			int imgHeight = imageAry[i].getHeight(null);
 			// imgHeight++目的是画一条一个像素的分割线
-			g.drawImage(imageAry[i], 0, y, width, imgHeight++, null);
+			g.drawImage(imageAry[i], 0, y, width, imgHeight, null);
 			y += imgHeight;
 		}
 

@@ -19,14 +19,10 @@ import com.simon.credit.toolkit.lang.ArrayToolkits;
  */
 public class QRCodeBuilder {
 
-	/**
-	 * 二维码图片格式范畴
-	 */
+	/** 二维码图片格式范畴 */
 	private static final String[] formats = { 
-		"bmp", "BMP", "gif" , "GIF", "JPEG", "jpeg", 
-		"JPG", "jpg", "pcx" , "PCX", "png" , "PNG" , 
-		"pnm", "PNM", "raw" , "RAW", "tiff", "TIFF", 
-		"tif", "TIF", "wbmp", "WBMP" 
+		"bmp", "BMP", "gif", "GIF", "JPEG", "jpeg", "JPG" , "jpg", "pcx" , "PCX" , "png", 
+		"PNG", "pnm", "PNM", "raw", "RAW" , "tiff", "TIFF", "tif", "TIF" , "wbmp", "WBMP" 
 	};
 
 	/**
