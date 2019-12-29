@@ -22,8 +22,31 @@ public class FullTextReplication {
 	public static void main(String[] args) {
 		// File dir = new File("D:\\work\\eclipse-workspace\\dubbo-parent");
 		// pomReplace(dir, "<version>2.5.4-SNAPSHOT</version>", "<version>2.5.4</version>");
-		File dir = new File("D:\\work\\sts4-workspace\\mydubbo");
-		pomSimplify(dir, "<project xmlns");
+		// File dir = new File("D:\\work\\sts4-workspace\\mynetty");
+		// pomSimplify(dir, "<project xmlns");
+		clearBinDir(new File("D:\\work\\eclipse-workspace\\spring-framework-4.3.18.RELEASE"));
+	}
+
+	public static void clearBinDir(File file) {
+		if (file.isDirectory()) {
+			if("bin".equals(file.getName()) || "classes".equals(file.getName())) {
+				try {
+					FileUtils.deleteDirectory(file);
+				} catch (Exception e) {
+					// ignore
+				}
+			} else {
+				File[] subDirs = file.listFiles(new FileFilter() {
+					@Override
+					public boolean accept(File file) {
+						return file.isDirectory();
+					}
+				});
+				for (File subDir : subDirs) {
+					clearBinDir(subDir);// 只递归目录
+				}
+			}
+		}
 	}
 
 	public static void pomSimplify(File file, String startTag) {
@@ -46,8 +69,8 @@ public class FullTextReplication {
 						lines.add(line);
 					}
 				}
-				// 关闭资源
-				iterator.close();
+
+				iterator.close();// 关闭资源
 
 				trimLast(lines);
 				try {

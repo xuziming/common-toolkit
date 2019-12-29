@@ -9,11 +9,6 @@ import java.io.Writer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.xml.serialize.OutputFormat;
@@ -54,26 +49,6 @@ public class XmlFormat {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	public String makeXMLString(Document doc) {
-		String xmlString = "";
-		if (doc != null) {
-			try {
-				TransformerFactory transfac = TransformerFactory.newInstance();
-				Transformer trans = transfac.newTransformer();
-				trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-				trans.setOutputProperty(OutputKeys.INDENT, "yes");
-				StringWriter sw = new StringWriter();
-				StreamResult result = new StreamResult(sw);
-				DOMSource source = new DOMSource(doc);
-				trans.transform(source, result);
-				xmlString = sw.toString();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return xmlString;
 	}
 
 	public static void main(String[] args) throws Exception {
