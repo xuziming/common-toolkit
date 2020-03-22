@@ -70,7 +70,7 @@ public class ExcelReader {
 	}
 
 	/**
-	 * 根据sheet name 读取对应分页的数据
+	 * 根据sheet name 读取对应sheet的数据
 	 * @param sheetName
 	 * @return
 	 */
