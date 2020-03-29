@@ -14,6 +14,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.simon.credit.toolkit.common.CommonToolkits;
+import com.simon.credit.toolkit.ext.XmlFormat;
 import com.simon.credit.toolkit.io.IOToolkits;
 import com.simon.credit.toolkit.io.LineIterator;
 

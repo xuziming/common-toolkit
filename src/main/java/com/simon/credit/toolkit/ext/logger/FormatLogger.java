@@ -11,20 +11,20 @@ import com.simon.credit.toolkit.ext.logger.format.Slf4jFormatter;
  * Format Logger(delegation pattern)
  * @author XUZIMING 2018-08-15
  */
-public final class FormatLogger extends DelegateLogger {
+public final class FormatLogger extends BasicAbstractLogger {
 
 	/** 默认日期格式 */
 	private static final String DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-	private boolean isConsoleEnabled = false;
+	private boolean consoleEnabled = false;
 
 	public FormatLogger(Logger delegator) {
 		this(delegator, true);
 	}
 
-	public FormatLogger(Logger delegator, boolean isConsoleEnabled) {
+	public FormatLogger(Logger delegator, boolean consoleEnabled) {
 		super(delegator);
-		this.isConsoleEnabled = isConsoleEnabled;
+		this.consoleEnabled = consoleEnabled;
 	}
 
 	/****************************************************************************************************/
@@ -142,7 +142,7 @@ public final class FormatLogger extends DelegateLogger {
 	 * @param args
 	 */
 	public void consolePrint(String messagePattern, Object... args) {
-		if (!isConsoleEnabled) {
+		if (!isConsoleEnabled()) {
 			return;
 		}
 		if (CommonToolkits.isEmptyContainNull(messagePattern)) {
@@ -151,8 +151,13 @@ public final class FormatLogger extends DelegateLogger {
 		System.out.println(Slf4jFormatter.format(messagePattern, args));
 	}
 
-	public void setConsoleEnabled(boolean isConsoleEnabled) {
-		this.isConsoleEnabled = isConsoleEnabled;
+	public void setConsoleEnabled(boolean consoleEnabled) {
+		this.consoleEnabled = consoleEnabled;
+	}
+
+	@Override
+	protected boolean isConsoleEnabled() {
+		return consoleEnabled;
 	}
 
 }
