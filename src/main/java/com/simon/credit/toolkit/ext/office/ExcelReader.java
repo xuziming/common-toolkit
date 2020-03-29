@@ -75,59 +75,63 @@ public class ExcelReader {
 	 * @return
 	 */
 	public List<Object[]> getData(String sheetName) {
-		List<Object[]> result = new ArrayList<Object[]>();
+		List<Object[]> allRows = new ArrayList<Object[]>();
 		if (sheetName == null) {
 			for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
 				Sheet sheet = workbook.getSheetAt(i);
-				List<Object[]> subResult = this.reader(sheet);
-				result.addAll(subResult);
+				List<Object[]> oneSheetRows = this.read(sheet);
+				allRows.addAll(oneSheetRows);
 			}
 		} else {
 			Sheet sheet = workbook.getSheet(sheetName);
-			List<Object[]> subResult = this.reader(sheet);
+			List<Object[]> subResult = this.read(sheet);
 			return subResult;
 		}
-		return result;
+		return allRows;
 	}
 
-	protected List<Object[]> reader(Sheet sheet) {
-		if (sheet == null) {
-			return null;
-		}
-		List<Object[]> result = new ArrayList<Object[]>();
+	/**
+	 * 读取指定sheet的所有行
+	 * @param sheet
+	 * @return
+	 */
+	protected List<Object[]> read(Sheet sheet) {
+		if (sheet == null) return null;
+
+		List<Object[]> allRowValues = new ArrayList<Object[]>(10);
 		int cellNums = 0;
 		Iterator<Row> rows = sheet.iterator();
 		while (rows.hasNext()) {
 			Row row = rows.next();
+			if (row == null) continue;
+
 			if (row.getRowNum() == 0) {
 				cellNums = row.getLastCellNum();
 				if (!includeHead) {
 					continue;
 				}
 			}
-			Iterator<Cell> cells = row.iterator();
 
-			Object[] datas = new Object[cellNums];
-			while (cells.hasNext()) {
-				Cell cell = cells.next();
+			Object[] oneRowValues = new Object[cellNums];
+			Iterator<Cell> columns = row.iterator();
+			while (columns.hasNext()) {
+				Cell cell = columns.next();
 				try {
-					Object obj = formatCell(cell);
-					datas[cell.getColumnIndex()] = obj;
+					Object columnValue = getValue(cell);
+					oneRowValues[cell.getColumnIndex()] = columnValue;
 				} catch (Exception e) {
 					continue;
 				}
 			}
 
-			if (CommonToolkits.isAllEmpty(datas)) {
-				continue;
-			}
+			if (CommonToolkits.isAllEmpty(oneRowValues)) continue;
 
-			result.add(datas);
+			allRowValues.add(oneRowValues);
 		}
-		return result;
+		return allRowValues;
 	}
 
-	protected Object formatCell(Cell cell) {
+	protected Object getValue(Cell cell) {
 		if (cell == null) {
 			return null;
 		}
@@ -140,7 +144,6 @@ public class ExcelReader {
 				} else {
 					obj = cell.getNumericCellValue();
 				}
-	
 				break;
 			case Cell.CELL_TYPE_STRING:
 				obj = cell.getStringCellValue();
