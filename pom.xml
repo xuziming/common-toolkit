@@ -19,7 +19,7 @@
         <commons-io.version>1.3.2</commons-io.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <poi-examples.version>3.10-FINAL</poi-examples.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <com.google.zxing.version>3.3.0</com.google.zxing.version>
         <kryo.version>3.0.3</kryo.version>
     </properties>
