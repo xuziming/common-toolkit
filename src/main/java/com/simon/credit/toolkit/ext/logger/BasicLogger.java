@@ -7,13 +7,13 @@ import org.slf4j.Marker;
  * Basic Abstract Logger
  * @author XUZIMING 2018-08-15
  */
-public abstract class BasicAbstractLogger implements Logger {
+public abstract class BasicLogger implements Logger {
 
 	protected abstract boolean isConsoleEnabled();
 
 	protected Logger delegator;
 
-	public BasicAbstractLogger(Logger delegator) {
+	public BasicLogger(Logger delegator) {
 		this.delegator = delegator;
 	}
 

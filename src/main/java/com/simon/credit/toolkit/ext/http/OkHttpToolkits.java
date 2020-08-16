@@ -28,7 +28,7 @@ import com.simon.credit.toolkit.ext.lang.ObjectToolkits;
  * HTTP请求工具类
  * @author XUZIMING 2017-08-01
  */
-public class HttpToolkits {
+public class OkHttpToolkits {
 
 	private static final int CONNECT_TIMEOUT = 5;
 	private static final int READ_TIMEOUT 	 = 10;
@@ -36,13 +36,13 @@ public class HttpToolkits {
 
 	/** 静态内部类实现单例模式 */
 	private static class SingletonHolder {
-		private static final HttpToolkits INSTANCE = new HttpToolkits();
+		private static final OkHttpToolkits INSTANCE = new OkHttpToolkits();
 	}
 
-	private HttpToolkits() {
+	private OkHttpToolkits() {
 		// 避免采用反射方式直接调用私有构造器, 从而破解单例模式
 		if (SingletonHolder.INSTANCE != null) {
-			throw new MultipleInstanceException(HttpToolkits.class);
+			throw new MultipleInstanceException(OkHttpToolkits.class);
 		}
 	}
 
@@ -53,7 +53,7 @@ public class HttpToolkits {
 	}
 
 	/** 获取单例对象 */
-	public static HttpToolkits getInstance() {
+	public static OkHttpToolkits getInstance() {
 		return SingletonHolder.INSTANCE;
 	}
 
@@ -93,7 +93,7 @@ public class HttpToolkits {
 	 * @param paramMap 请求参数map
 	 * @return
 	 */
-	private String doPost(String url, Map<String, Object> paramMap) {
+	private String doPostInternally(String url, Map<String, Object> paramMap) {
 		FormBody.Builder formBodyBuilder = new FormBody.Builder();
 		if (paramMap != null && !paramMap.isEmpty()) {
 			for (String key : paramMap.keySet()) {
@@ -126,9 +126,9 @@ public class HttpToolkits {
 	 */
 	private String httpPost(String url, String paramJSONString) {
 		if (CommonToolkits.isEmptyContainNull(paramJSONString)) {
-			return this.doPost(url, new JSONObject());
+			return this.doPostInternally(url, new JSONObject());
 		} else {
-			return this.doPost(url, JSON.parseObject(paramJSONString));
+			return this.doPostInternally(url, JSON.parseObject(paramJSONString));
 		}
 	}
 
@@ -150,7 +150,7 @@ public class HttpToolkits {
 	 * @param jsonParams 请求参数(JSON字符串格式)
 	 * @return URL 所代表远程资源的响应结果
 	 */
-	public static String jsondGet(String url, String jsonParams) {
+	public static String jsonGet(String url, String jsonParams) {
 		String result = "";
 		BufferedReader in = null;
 		try {

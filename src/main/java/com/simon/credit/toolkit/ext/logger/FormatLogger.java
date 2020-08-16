@@ -1,17 +1,16 @@
 package com.simon.credit.toolkit.ext.logger;
 
-import org.slf4j.Logger;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.simon.credit.toolkit.common.CommonToolkits;
-import com.simon.credit.toolkit.ext.logger.format.Slf4jFormatter;
+import com.simon.credit.toolkit.ext.format.Slf4jFormatter;
+import org.slf4j.Logger;
 
 /**
  * Format Logger(delegation pattern)
  * @author XUZIMING 2018-08-15
  */
-public final class FormatLogger extends BasicAbstractLogger {
+public final class FormatLogger extends BasicLogger {
 
 	/** 默认日期格式 */
 	private static final String DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";

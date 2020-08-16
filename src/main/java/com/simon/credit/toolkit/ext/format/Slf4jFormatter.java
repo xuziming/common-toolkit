@@ -1,4 +1,4 @@
-package com.simon.credit.toolkit.ext.logger.format;
+package com.simon.credit.toolkit.ext.format;
 
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;

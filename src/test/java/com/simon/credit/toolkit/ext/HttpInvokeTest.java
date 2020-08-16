@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
-import com.simon.credit.toolkit.ext.http.HttpToolkits;
+import com.simon.credit.toolkit.ext.http.OkHttpToolkits;
 
 public class HttpInvokeTest {
 
@@ -21,7 +21,7 @@ public class HttpInvokeTest {
 			paramMap.put("type", "yuantong");
 			paramMap.put("postid", "11111111111");
 
-			return HttpToolkits.getInstance().httpPost(url, paramMap);
+			return OkHttpToolkits.getInstance().httpPost(url, paramMap);
 		}
 
 	}
