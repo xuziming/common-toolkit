@@ -10,6 +10,7 @@ import java.io.ObjectStreamException;
 import java.io.StringWriter;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * FreeMarker格式化
@@ -17,9 +18,11 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class FreeMarkerFormatter {
 
-    private Configuration config = new Configuration(Configuration.getVersion());
+    private Configuration config = new Configuration(Configuration.VERSION_2_3_30);
     private StringTemplateLoader loader = new StringTemplateLoader();
     private AtomicLong templateIndex = new AtomicLong(0);
+
+    private final ReentrantLock lock = new ReentrantLock();
 
     private static final class SingletonHolder {
         private static final FreeMarkerFormatter INSTANCE = new FreeMarkerFormatter();
@@ -36,13 +39,22 @@ public class FreeMarkerFormatter {
         return FreeMarkerFormatter.SingletonHolder.INSTANCE;
     }
 
-    private Object readResolve() throws ObjectStreamException {
+    private final Object readResolve() throws ObjectStreamException {
         // 避免反序列化破解单例模式: 发序列化时, 若定义了readResolve(),
         // 则直接返回此方法指定的对象, 而无需单独再创建新对象.
         return FreeMarkerFormatter.SingletonHolder.INSTANCE;
     }
 
-    public String format(String templateContent, Map<String, Object> dataModel) {
+    public final String format(String templateContent, Map<String, Object> dataModel) {
+        lock.lock();
+        try {
+            return formatWithoutLock(templateContent, dataModel);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private final String formatWithoutLock(String templateContent, Map<String, Object> dataModel) {
         String templateName  = Long.toString(templateIndex.incrementAndGet());
         loader.putTemplate(templateName, templateContent);
         config.setTemplateLoader(loader);

@@ -2,20 +2,26 @@ package com.simon.credit.toolkit.ext.format;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class FreeMarkerFormatterTest {
 
-    public static void main(String[] args) {
-        // 第一次：初始化对象
+    public static void main(String[] args) throws InterruptedException {
+        // 第一次：初始化对象(减少对象创建过程，提升后续格式化速度)
         formatOnce();
 
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 1000; i++) {
-            String str = formatOnce();
-            System.out.println(str);
+        CountDownLatch latch = new CountDownLatch(100);
+        for (int i = 0; i < 100; i++) {
+            new Thread(() -> {
+                String str = formatOnce();
+                System.out.println(str);
+                latch.countDown();
+            }).start();
         }
+        latch.await();
         long end = System.currentTimeMillis();
-        System.out.println(end - start);
+        System.out.println("cost time: " + (end - start) + " ms");
     }
 
     private static String formatOnce() {
