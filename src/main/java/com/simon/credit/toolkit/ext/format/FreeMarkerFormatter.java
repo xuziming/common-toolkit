@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class FreeMarkerFormatter {
 
-    private Configuration config = new Configuration(Configuration.getVersion());;
+    private Configuration config = new Configuration(Configuration.getVersion());
     private StringTemplateLoader loader = new StringTemplateLoader();
     private AtomicLong templateIndex = new AtomicLong(0);
 
