@@ -73,6 +73,19 @@ public class ObjectToolkits {
     }
 
     /**
+     * 移除字符串左右两侧的空白字符，空字符串则转为null
+     * @param object
+     * @return
+     */
+    public static final String trimToNull(Object object) {
+        return CommonToolkits.trimToNull(toString(object));
+    }
+
+    public static final String trimToEmpty(Object object) {
+        return CommonToolkits.trimToEmpty(toString(object));
+    }
+
+    /**
      * 针对对象的字符串属性进行trimToNull操作
      * @param obj
      * @return
