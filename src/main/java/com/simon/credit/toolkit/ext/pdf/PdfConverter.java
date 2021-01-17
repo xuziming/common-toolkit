@@ -45,66 +45,66 @@ public class PdfConverter {
 		return SingletonHolder.INSTANCE;
 	}
 
-	public static void main(String[] args) throws IOException {
-		File pdfFile = new File("d:\\zxdk.pdf");
-		String imageDir = "d:\\";
-		PdfConverter.getInstance().castToImages(pdfFile, imageDir);
-	}
+//	public static void main(String[] args) throws IOException {
+//		File pdfFile = new File("d:\\zxdk.pdf");
+//		String imageDir = "d:\\";
+//		PdfConverter.getInstance().castToImages(pdfFile, imageDir);
+//	}
 
-	/**
-	 * PDF文件转为一张张图片
-	 * @param pdfFile
-	 * @return 图片文件数组
-	 * @throws IOException
-	 */
-	public File[] castToImages(File pdfFile) throws IOException {
-		String dir = pdfFile.getParent() + File.separator + "Images(" + pdfFile.getName() + ")";
-		if (!new File(dir).exists()) {
-			new File(dir).mkdirs();
-		}
-		return castToImages(pdfFile, dir);
-	}
+//	/**
+//	 * PDF文件转为一张张图片
+//	 * @param pdfFile
+//	 * @return 图片文件数组
+//	 * @throws IOException
+//	 */
+//	public File[] castToImages(File pdfFile) throws IOException {
+//		String dir = pdfFile.getParent() + File.separator + "Images(" + pdfFile.getName() + ")";
+//		if (!new File(dir).exists()) {
+//			new File(dir).mkdirs();
+//		}
+//		return castToImages(pdfFile, dir);
+//	}
 
-	/**
-	 * PDF文件转为文件
-	 * @param pdfFile PDF文件
-	 * @param imageDir 图片存储文件夹
-	 * @return
-	 * @throws IOException
-	 */
-	public File[] castToImages(File pdfFile, String imageDir) throws IOException {
-		// 加载指定PDF文件
-		PDDocument doc = PDDocument.load(pdfFile);
-		// 获取PDF文件页码
-		int pageCount = doc.getNumberOfPages();
-		// 输出页码，可以注释掉
-		System.out.println("pdf total page: " + pageCount);
-
-		@SuppressWarnings("unchecked")
-		List<PDPage> pages = doc.getDocumentCatalog().getAllPages();
-		File[] imageFiles = new File[pages.size()];
-
-		for (int i = 1; i <= pages.size(); i++) {
-			PDPage page = pages.get(i - 1);
-
-			String suffix = "jpg";// 后缀
-
-			BufferedImage image = page.convertToImage();// 将页面转换为图片
-			Iterator<ImageWriter> iter = ImageIO.getImageWritersBySuffix(suffix);
-			while (iter.hasNext()) {
-				ImageWriter writer = iter.next();
-				imageFiles[i - 1] = new File(imageDir + File.separator + "p" + i + "." + suffix);
-				FileOutputStream out = new FileOutputStream(imageFiles[i - 1]);
-				ImageOutputStream outImage = ImageIO.createImageOutputStream(out);
-				writer.setOutput(outImage);
-				writer.write(new IIOImage(image, null, null));
-			}
-		}
-
-		// 关闭资源
-		doc.close();
-		System.out.println("pdf cast to image completed.");
-		return imageFiles;
-	}
+//	/**
+//	 * PDF文件转为文件
+//	 * @param pdfFile PDF文件
+//	 * @param imageDir 图片存储文件夹
+//	 * @return
+//	 * @throws IOException
+//	 */
+//	public File[] castToImages(File pdfFile, String imageDir) throws IOException {
+//		// 加载指定PDF文件
+//		PDDocument doc = PDDocument.load(pdfFile);
+//		// 获取PDF文件页码
+//		int pageCount = doc.getNumberOfPages();
+//		// 输出页码，可以注释掉
+//		System.out.println("pdf total page: " + pageCount);
+//
+//		@SuppressWarnings("unchecked")
+//		List<PDPage> pages = doc.getDocumentCatalog().getAllPages();
+//		File[] imageFiles = new File[pages.size()];
+//
+//		for (int i = 1; i <= pages.size(); i++) {
+//			PDPage page = pages.get(i - 1);
+//
+//			String suffix = "jpg";// 后缀
+//
+//			BufferedImage image = page.convertToImage();// 将页面转换为图片
+//			Iterator<ImageWriter> iter = ImageIO.getImageWritersBySuffix(suffix);
+//			while (iter.hasNext()) {
+//				ImageWriter writer = iter.next();
+//				imageFiles[i - 1] = new File(imageDir + File.separator + "p" + i + "." + suffix);
+//				FileOutputStream out = new FileOutputStream(imageFiles[i - 1]);
+//				ImageOutputStream outImage = ImageIO.createImageOutputStream(out);
+//				writer.setOutput(outImage);
+//				writer.write(new IIOImage(image, null, null));
+//			}
+//		}
+//
+//		// 关闭资源
+//		doc.close();
+//		System.out.println("pdf cast to image completed.");
+//		return imageFiles;
+//	}
 
 }

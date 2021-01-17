@@ -1,14 +1,12 @@
 package com.simon.credit.toolkit.ext.image;
 
+import com.simon.credit.exception.MultipleInstanceException;
+import net.coobird.thumbnailator.Thumbnails;
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectStreamException;
-
-import net.coobird.thumbnailator.Thumbnails;
-
-import org.apache.commons.io.FilenameUtils;
-
-import com.simon.credit.exception.MultipleInstanceException;
 
 /**
  * 图片处理器
@@ -27,7 +25,7 @@ public class ImageProcesser {
 		}
 	}
 
-	private Object readResolve() throws ObjectStreamException {
+	private final Object readResolve() throws ObjectStreamException {
 		// 避免反序列化破解单例模式: 发序列化时, 若定义了readResolve(),
 		// 则直接返回此方法指定的对象, 而无需单独再创建新对象.
 		return SingletonHolder.INSTANCE;
@@ -35,11 +33,6 @@ public class ImageProcesser {
 
 	public static ImageProcesser getInstance() {
 		return SingletonHolder.INSTANCE;
-	}
-
-	public static void main(String[] args) throws IOException {
-		String destImage = getInstance().compress("d:/ttt.jpg");
-		System.out.println(destImage);
 	}
 
 	/**

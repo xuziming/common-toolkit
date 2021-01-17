@@ -35,13 +35,13 @@ public class PdfToLongImageTest {
 		// PDF文件转为图片
 //		File[] imageFiles = PdfConverter.getInstance().castToImages(pdfFile);
 //		System.out.println(imageFiles);
-		String[] imageFiles = { 
-				"C:\\Users\\simon\\Desktop\\福田区委\\01.jpg", "C:\\Users\\simon\\Desktop\\福田区委\\02.jpg",
-				"C:\\Users\\simon\\Desktop\\福田区委\\03.jpg", "C:\\Users\\simon\\Desktop\\福田区委\\04.jpg",
-				"C:\\Users\\simon\\Desktop\\福田区委\\05.jpg", "C:\\Users\\simon\\Desktop\\福田区委\\06.jpg",
-				"C:\\Users\\simon\\Desktop\\福田区委\\07.jpg", "C:\\Users\\simon\\Desktop\\福田区委\\08.jpg",
-				"C:\\Users\\simon\\Desktop\\福田区委\\09.jpg", "C:\\Users\\simon\\Desktop\\福田区委\\10.jpg",
-				"C:\\Users\\simon\\Desktop\\福田区委\\11.jpg", "C:\\Users\\simon\\Desktop\\福田区委\\12.jpg" };
+		String[] imageFiles = {
+				"C:\\Users\\Administrator\\Desktop\\img\\1.jpg",
+				"C:\\Users\\Administrator\\Desktop\\img\\2.jpg",
+				"C:\\Users\\Administrator\\Desktop\\img\\3.jpg",
+				"C:\\Users\\Administrator\\Desktop\\img\\4.jpg",
+				"C:\\Users\\Administrator\\Desktop\\img\\5.jpg"
+		};
 
 		// 图片合成
 		File synthesizeFile = ImageVerticalSynthesizer.getInstance().imageSynthesize(imageFiles);

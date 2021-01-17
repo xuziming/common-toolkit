@@ -1,14 +1,12 @@
 package com.simon.credit.toolkit.ext.http;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectStreamException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
@@ -23,12 +21,63 @@ import com.simon.credit.exception.MultipleInstanceException;
 import com.simon.credit.toolkit.common.CommonToolkits;
 import com.simon.credit.toolkit.io.IOToolkits;
 import com.simon.credit.toolkit.ext.lang.ObjectToolkits;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 /**
  * HTTP请求工具类
  * @author XUZIMING 2017-08-01
  */
 public class OkHttpToolkits {
+
+	public static void main(String[] args) {
+		ExecutorService threadPool = Executors.newCachedThreadPool();
+
+		// build uri
+		String uri = "http://www.huadiled.com.cn/plus/diy.php";
+
+		// build http parameters
+		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		parameters.add("action", "post");
+		parameters.add("diyid", "1");
+		parameters.add("do", "2");
+		parameters.add("title", "6.构建“知事识人”干部队伍管理评价体系");
+		parameters.add("wzid", "115");// 这个是我们项目的id, 别搞错了，之前成156，投给了：46.推进韧性健康城区公共卫生应急体系改革（区应急管理局）
+		parameters.add("pingjia", "1");
+		parameters.add("vdcode", "7524");// 验证码
+		parameters.add("dede_fields", "title,text;wzid,text;pingjia,radio;liuyan,multitext;ip,text");
+		parameters.add("dede_fieldshash", "0d6bd5c6fb3e3a27f87eb576f4afe38f");
+
+		// build http headers
+		HttpHeaders headers = new HttpHeaders();
+		headers.clear();
+		headers.add("Cookie", "PHPSESSID=ttejddlem60l2vn122gbu2p5f0");
+		headers.add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
+		headers.add("Accept-Encoding", "gzip, deflate");
+		headers.add("Accept-Language", "zh-CN,zh;q=0.9");
+		headers.add("Cache-Control", "no-cache");
+		headers.add("Connection", "keep-alive");
+		headers.add("Content-Length", "1049");
+		headers.add("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundary7sMwCxMVh6A6R72n");
+		headers.add("Host", "www.huadiled.com.cn");
+		headers.add("Origin", "http://www.huadiled.com.cn");
+		headers.add("Pragma", "no-cache");
+		headers.add("Referer", "http://www.huadiled.com.cn/zdggxm/115.html");
+		headers.add("Upgrade-Insecure-Requests", "1");
+		headers.add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36");
+
+		HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(parameters, headers);
+
+		int voteTimes = 1000;// 投票票数，可根据需要进行修改
+		for (int i = 0; i < voteTimes; i++) {
+			threadPool.execute(() -> {
+				String result = new RestTemplate().postForObject(uri, httpEntity, String.class);
+				System.out.println(result);
+			});
+		}
+	}
 
 	private static final int CONNECT_TIMEOUT = 5;
 	private static final int READ_TIMEOUT 	 = 10;
@@ -76,6 +125,8 @@ public class OkHttpToolkits {
 
 		try {
 			response = CLIENT.newCall(request).execute();
+//			byte[] bytes = response.body().bytes();
+//			FileUtils.writeByteArrayToFile(new File("d:/img.jpg"), bytes);
 			return response.body().string();
 		} catch (Exception e) {
 			e.printStackTrace();
