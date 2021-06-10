@@ -1,6 +1,7 @@
 package com.simon.credit.toolkit.ext.lang;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.esotericsoftware.kryo.Kryo;
 import com.simon.credit.toolkit.common.CommonToolkits;
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +53,19 @@ public class ObjectToolkits {
         }
         return JSON.toJSONStringWithDateFormat(object,
                 CommonToolkits.DEFFAULT_DATE_FORMAT, SerializerFeature.WriteMapNullValue);
+    }
+
+    public static void main(String[] args) {
+        List<UserInfo> result = getResult(UserInfo.class);
+        for (UserInfo userInfo : result) {
+            System.out.println(userInfo.getClass());
+        }
+        System.out.println(result);
+    }
+
+    public static <R, T> List<R> getResult(Class<R> clazz) {
+        List<R> r = JSON.parseArray("[{\"name\":\"zhangsan\"}]", clazz);
+        return r;
     }
 
     /**

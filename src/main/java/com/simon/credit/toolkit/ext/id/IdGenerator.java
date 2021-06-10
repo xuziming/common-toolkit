@@ -1,7 +1,9 @@
 package com.simon.credit.toolkit.ext.id;
 
+import com.esotericsoftware.kryo.serializers.VersionFieldSerializer;
 import com.simon.credit.toolkit.lang.SnowFlake;
 import com.simon.credit.toolkit.network.NetToolkits;
+import org.nustaq.serialization.annotations.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -18,7 +20,12 @@ import javax.annotation.PostConstruct;
 @Service
 public class IdGenerator {
 
+    @Version(value = 1)
+    private int a;
+
+    @VersionFieldSerializer.Since
     private static final String PREFIX = "distributed.id.service";
+
 
     /** distributed.id.service.id_generator */
     private static final String ID_GENERATOR_PREFIX = PREFIX + ".id_generator";
